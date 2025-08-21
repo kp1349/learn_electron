@@ -26,6 +26,15 @@
         <div id="logsSection" class="logs-section hidden">
             <h2>Logs</h2>
             <textarea id="logs" placeholder="Logs will appear here..." readonly></textarea>
+            <div class="log-filter">
+                <label for="logLevelFilter">Log Level:</label>
+                <select id="logLevelFilter" class="log-level-select">
+                    <option value="DEBUG">Debug</option>
+                    <option value="INFO" selected>Info</option>
+                    <option value="WARNING">Warning</option>
+                    <option value="ERROR">Error</option>
+                </select>
+            </div>
         </div>
     </div>
     

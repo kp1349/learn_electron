@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.logsTextarea = logs;
     
     // Import logging functions from the shared logger
-    const { logInfo, logDebug, logWarning, logError } = window.Logger;
+    const { logInfo, logDebug, logWarning, logError, applyLogFilter } = window.Logger;
     
     // Toggle logs section
     toggleBtn.addEventListener('click', function() {
@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleBtn.textContent = 'Show Logs';
             logInfo('Logs section closed');
         }
+    });
+    
+    // Handle log level filter
+    const logLevelFilter = document.getElementById('logLevelFilter');
+    logLevelFilter.addEventListener('change', function() {
+        const selectedLevel = this.value;
+        applyLogFilter(selectedLevel);
+        logInfo(`Log filter changed to: ${selectedLevel}`);
     });
     
     // Handle input changes

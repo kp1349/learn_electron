@@ -6,20 +6,21 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
     color: white;
 }
 
 .container {
     text-align: center;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     max-width: 600px;
     width: 100%;
     margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 h1 {
@@ -52,7 +53,7 @@ textarea {
     padding: 1rem;
     border: none;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
     color: white;
     font-family: inherit;
     font-size: 1rem;
@@ -60,12 +61,14 @@ textarea {
     box-sizing: border-box;
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 textarea:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.5);
+    border-color: rgba(244, 67, 54, 0.3);
 }
 
 textarea::placeholder {
@@ -73,8 +76,8 @@ textarea::placeholder {
 }
 
 .toggle-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
@@ -85,7 +88,8 @@ textarea::placeholder {
 }
 
 .toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(244, 67, 54, 0.2);
+    border-color: rgba(244, 67, 54, 0.4);
     transform: translateY(-2px);
 }
 
@@ -127,3 +131,57 @@ textarea::placeholder {
 .log-info { color: #4CAF50; }
 .log-warning { color: #FF9800; }
 .log-error { color: #F44336; }
+
+/* Log filter styling */
+.log-filter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.log-filter label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.log-level-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.log-level-select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.5);
+}
+
+.log-level-select option {
+    background: #1a237e;
+    color: white;
+}
+
+/* Make logs section relative for absolute positioning of filter */
+.logs-section {
+    position: relative;
+    margin-top: 1rem;
+    text-align: left;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    max-height: 0;
+    opacity: 0;
+}

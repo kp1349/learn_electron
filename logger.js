@@ -11,6 +11,12 @@ const LogLevel = {
 // Default log level
 let currentLogLevel = LogLevel.INFO;
 
+// Log filter level for renderer process
+let logFilterLevel = LogLevel.INFO;
+
+// Store all logs for filtering in renderer process
+let allLogs = [];
+
 // Check if we're in Node.js (main process) or browser (renderer process)
 const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
 
@@ -44,11 +50,44 @@ function log(message, level = LogLevel.INFO) {
     const logEntry = `[${timestamp}] ${levelText} ${message}`;
     console.log(`%c${logEntry}`, `color: ${color}; font-weight: bold;`);
     
-    // If we have a logs textarea, add to it
+    // Store log entry for filtering
+    allLogs.push({ entry: logEntry, level: level });
+    
+    // If we have a logs textarea, add to it (with filtering)
     if (typeof window !== 'undefined' && window.logsTextarea) {
-      window.logsTextarea.value += logEntry + '\n';
-      window.logsTextarea.scrollTop = window.logsTextarea.scrollHeight;
+      if (shouldShowLog(level)) {
+        window.logsTextarea.value += logEntry + '\n';
+        window.logsTextarea.scrollTop = window.logsTextarea.scrollHeight;
+      }
     }
+  }
+}
+
+// Check if log should be shown based on filter level
+function shouldShowLog(level) {
+  const levelOrder = [LogLevel.DEBUG, LogLevel.INFO, LogLevel.WARNING, LogLevel.ERROR];
+  const filterIndex = levelOrder.indexOf(logFilterLevel);
+  const logIndex = levelOrder.indexOf(level);
+  return logIndex >= filterIndex;
+}
+
+// Apply log filter and refresh display
+function applyLogFilter(filterLevel) {
+  logFilterLevel = filterLevel;
+  
+  if (typeof window !== 'undefined' && window.logsTextarea) {
+    // Clear current display
+    window.logsTextarea.value = '';
+    
+    // Re-add filtered logs
+    allLogs.forEach(log => {
+      if (shouldShowLog(log.level)) {
+        window.logsTextarea.value += log.entry + '\n';
+      }
+    });
+    
+    // Scroll to bottom
+    window.logsTextarea.scrollTop = window.logsTextarea.scrollHeight;
   }
 }
 
@@ -106,6 +145,7 @@ if (isNode) {
     logWarning,
     logError,
     setLogLevel,
-    getLogLevel
+    getLogLevel,
+    applyLogFilter
   };
 }
